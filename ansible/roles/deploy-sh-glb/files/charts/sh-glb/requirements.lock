@@ -1,0 +1,6 @@
+dependencies:
+- name: coredns
+  repository: file://../coredns
+  version: 1.2.4
+digest: sha256:97d13db9cb5b011040480ca09510fae8bbf2d11f3afdfd237d978469b0f51c48
+generated: 2019-02-24T12:44:50.082886342-05:00

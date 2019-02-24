@@ -1,0 +1,58 @@
+apiVersion: multiclusterdns.federation.k8s.io/v1alpha1
+kind: Domain
+metadata:
+  # Corresponds to <federation> in the resource records.
+  name: raffa-apps
+  # The namespace running federation-controller-manager.
+  namespace: federation-system
+# The domain/subdomain that is setup in your externl-dns provider.
+domain: raffa-apps.systems
+---
+apiVersion: multiclusterdns.federation.k8s.io/v1alpha1
+kind: ServiceDNSRecord
+metadata:
+  # The name of the sample service.
+  name: bookinfo-ingressgateway
+  # The namespace of the sample deployment/service.
+  namespace: bookinfo
+spec:
+  # The name of the corresponding `Domain`.
+  domainRef: raffa-apps
+  recordTTL: 300
+  dnsPrefix: bookinfo
+# ---  
+# apiVersion: core.federation.k8s.io/v1alpha1
+# kind: FederatedIngress
+# metadata:
+#   name: bookinfo-ingress
+#   namespace: bookinfo
+# spec:
+#   template:
+#     spec:
+#       rules:
+#       - host: bookinfo.raffa.apps
+#         http:
+#           paths:
+#           - backend:
+#               serviceName: bookinfo-ingressgateway
+#               servicePort: 80
+# ---
+# apiVersion: multiclusterdns.federation.k8s.io/v1alpha1
+# kind: IngressDNSRecord
+# metadata:
+#   name: bookinfo-ingress
+#   namespace: bookinfo
+# spec:
+#   hosts:
+#   - bookinfo.raffa.apps
+#   recordTTL: 300       
+# ---
+# apiVersion: core.federation.k8s.io/v1alpha1
+# kind: FederatedIngressPlacement
+# metadata:
+#   name: bookinfo-ingress
+#   namespace: bookinfo
+# spec:
+#   clusterNames:
+#   - raffa1
+#   - raffa2             

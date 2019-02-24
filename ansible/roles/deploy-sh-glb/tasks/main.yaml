@@ -1,0 +1,20 @@
+---
+- name: login to the clusters
+  include_tasks: authenticate.yaml
+  with_items: "{{ clusters }}"
+  loop_control:
+    loop_var: cluster
+
+- name: create service account
+  include_tasks: create-service-account.yaml
+  with_items: "{{ clusters | selectattr('federation_control_plane') | list }}"
+  loop_control:
+    loop_var: cluster 
+
+- name: deploy external dns
+  include_tasks: deploy-external-dns.yaml
+  with_items: "{{ clusters }}"
+  loop_control:
+    loop_var: cluster    
+          
+         

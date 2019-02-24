@@ -1,0 +1,18 @@
+# mandatory external values are 
+# coredns.servers.plugins[3].parameters -> this contains the domain
+# cluster.ca_data  -> these are the credetnails to connect to the cluster where the federation control plane is hosted
+# cluster.sa_token 
+# cluster.url
+
+
+log_level: debug
+txt_owner_id: raffa
+etcd_name: coredns-etcd
+
+coredns:
+  servers:
+  - zones:
+
+
+cluster:
+  name: main

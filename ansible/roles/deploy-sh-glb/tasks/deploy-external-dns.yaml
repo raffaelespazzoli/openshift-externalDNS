@@ -1,0 +1,29 @@
+---
+- name: create project
+  command: oc --context {{ cluster.context }} new-project {{ namespace }}
+  register: oc_res
+  failed_when: oc_res.rc >= 2
+
+- name: deploy etcd-operator
+  shell: helm template {{ role_path }}/files/charts/etcd-operator \
+         --name sh-glb \ 
+         --namespace {{ namespace }} | \        
+         oc --context {{ cluster.context }} apply -f - -n {{ namespace }}
+
+- name: wait for CRD to be created
+  shell: oc --context {{ cluster.context }} get crd etcdclusters.etcd.database.coreos.com
+  register: oc_res
+  until: oc_res.rc == 0
+  retries: 10
+  delay: 30
+
+
+- name: deploy external dns
+  shell: helm template {{ role_path }}/files/charts/sh-glb \
+         --name sh-glb \ 
+         --namespace {{ namespace }} \ 
+         --set coredns.servers[0].plugins[3].parameters={{ domain }} \
+         --set cluster.ca_data={{ (clusters | selectattr('federation_control_plane') | list)[0].ca_data }} \
+         --set cluster.sa_token={{ (clusters | selectattr('federation_control_plane') | list)[0].token }} \
+         --set cluster.url={{ (clusters | selectattr('federation_control_plane') | list)[0].url }} | \        
+         oc --context {{ cluster.context }} apply -f - -n {{ namespace }}

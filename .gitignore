@@ -1,0 +1,3 @@
+notes.txt
+ansible/roles/deploy-sh-glb/files/charts/sh-glb/charts/coredns-1.2.4.tgz
+ansible/roles/deploy-sh-glb/files/charts/sh-glb/charts/etcd-operator-0.8.3.tgz

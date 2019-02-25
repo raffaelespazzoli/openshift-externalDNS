@@ -22,7 +22,7 @@
   shell: helm template {{ role_path }}/files/charts/sh-glb \
          --name sh-glb \ 
          --namespace {{ namespace }} \ 
-         --set coredns.servers[0].plugins[3].parameters={{ domain }} \
+         --set domain={{ domain }} \
          --set cluster.ca_data={{ (clusters | selectattr('federation_control_plane') | list)[0].ca_data }} \
          --set cluster.sa_token={{ (clusters | selectattr('federation_control_plane') | list)[0].token }} \
          --set cluster.url={{ (clusters | selectattr('federation_control_plane') | list)[0].url }} | \        

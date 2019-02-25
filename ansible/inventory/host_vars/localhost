@@ -1,0 +1,11 @@
+domain: raffa.systems
+federation_name: raffa
+clusters:
+- name: raffa1
+  url: console.raffa1.casl-contrib.osp.rht-labs.com:8443
+  username: admin
+  password: "{{ lookup('env','password') }}"  
+- name: raffa2
+  url: console.raffa2.casl-contrib.osp.rht-labs.com:8443
+  username: admin
+  password: "{{ lookup('env','password') }}"  

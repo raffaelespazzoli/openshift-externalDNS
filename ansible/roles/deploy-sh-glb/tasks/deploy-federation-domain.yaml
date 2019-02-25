@@ -1,0 +1,8 @@
+---
+- name: process domain template
+  template:
+    src: domain.yaml.j2
+    dest: "/tmp/domain.yaml"
+
+- name: deploy extenral dns service acocunt role     
+  command: oc --context {{ cluster.context }} apply -f /tmp/domain.yaml -n federation-system

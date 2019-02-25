@@ -1,4 +1,4 @@
-# install a self-hosted global load balancer
+# Install a self-hosted global load balancer
 
 These are the instrctions to install a self-hosted global load balancer based on external-DNS and coredns.
 We assume you have already installed federation. You can do it following these [instructions](https://github.com/raffaelespazzoli/openshift-federation).
@@ -34,7 +34,6 @@ Once the deployemnt complete, coredns will explose a load balancer type sservice
 You should get the IPs of these services and configure the registrar of your domain to send requests to those IPs.
 
 ![holistic](./media/shglb-holistic.png)
-
 
 ## Test
 

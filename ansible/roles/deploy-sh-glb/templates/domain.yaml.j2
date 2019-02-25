@@ -2,8 +2,8 @@ apiVersion: multiclusterdns.federation.k8s.io/v1alpha1
 kind: Domain
 metadata:
   # Corresponds to <federation> in the resource records.
-  name: {{ .Values.federation_name }}
+  name: {{ federation_name }}
   # The namespace running federation-controller-manager.
   namespace: federation-system
 # The domain/subdomain that is setup in your externl-dns provider.
-domain: {{ .Values.domain }}
+domain: {{ domain }}

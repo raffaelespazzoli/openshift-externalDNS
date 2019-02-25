@@ -15,6 +15,12 @@
   include_tasks: deploy-external-dns.yaml
   with_items: "{{ clusters }}"
   loop_control:
-    loop_var: cluster    
+    loop_var: cluster  
+
+- name: deploy federation domain
+  include_tasks: deploy-federation-domain.yaml
+  with_items: "{{ clusters | selectattr('federation_control_plane') | list }}"
+  loop_control:
+    loop_var: cluster       
           
          

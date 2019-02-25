@@ -10,6 +10,7 @@ txt_owner_id: raffa
 etcd_name: coredns-etcd
 
 coredns:
+  replicaCount: 2
   servers:
   - zones:
 

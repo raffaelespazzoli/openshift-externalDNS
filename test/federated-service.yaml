@@ -1,0 +1,23 @@
+---  
+apiVersion: core.federation.k8s.io/v1alpha1
+kind: FederatedService
+metadata:
+  name: test-sh-glb
+spec:
+  template:
+    spec: 
+      ports:
+      - port: 9080
+        name: http
+      selector:
+        app: none
+      type: LoadBalancer  
+---
+apiVersion: core.federation.k8s.io/v1alpha1
+kind: FederatedServicePlacement
+metadata:
+  name: test-sh-glb
+spec:
+  clusterNames:
+  - raffa1
+  - raffa2  

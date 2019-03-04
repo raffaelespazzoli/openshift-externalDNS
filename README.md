@@ -35,20 +35,47 @@ You should get the IPs of these services and configure the registrar of your dom
 
 ![holistic](./media/shglb-holistic.png)
 
+## Making sure LoadBalancer services work
+
+You will need LoadBalancer type services to install the selh-hosted global load balancer and run the example.
+If you environment does not support LoadBalancer type services (like mine), you can install [MetalLB](https://metallb.universe.tf/installation/).
+
+```shell
+oc new-project metallb
+oc adm policy add-scc-to-user anyuid -z metallb-controller -n metallb
+oc adm policy add-scc-to-user privileged -z metallb-speaker -n metallb
+helm template --name metallb --namespace metallb metallb/charts/metallb | oc apply -f - -n metallb
+```
+
+You have to run the above commands in each of your clusters.
+Check out a configuration example [here](./metallb). you can configure metallb with this:
+
+```shell
+oc apply -f metallb/env1.yaml -n metallb
+```
+
+You have to run the above command in each of your clusters.
+
 ## Test
 
 In the cluster with the federation controle plane create a federated service and corresponfing federated service record
 
 ```shell
-oc new project shglb-test
-oc apply -f service.yaml
-oc apply -f dnsrecord.yaml
+oc new-project shglb-test
+oc apply -f test/federated-service.yaml -n shglb-test
+oc apply -f test/dnsrecord.yaml -n shglb-test
 ```
 
-now you should be able to the following
+at this point a dnsendpoint object should be created, you can inspect it with:
 
 ```shell
-dig myservice.<domain> <IP of one of the exposed coredns>
+oc get dnsendpoint service-test-sh-glb -n shglb-test -o yaml
+```
+
+now you should be able to the following:
+
+```shell
+dig shglb-test.<domain> <IP of one of the exposed coredns>
 ```
 
 and see a result.

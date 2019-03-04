@@ -1,0 +1,12 @@
+apiVersion: multiclusterdns.federation.k8s.io/v1alpha1
+kind: ServiceDNSRecord
+metadata:
+  # The name of the sample service.
+  name: test-sh-glb
+  # The namespace of the sample deployment/service.
+  namespace: shglb-test
+spec:
+  # The name of the corresponding `Domain`.
+  domainRef: raffa.systems
+  recordTTL: 300
+  dnsPrefix: test-sh-glb

@@ -2,22 +2,54 @@
 apiVersion: core.federation.k8s.io/v1alpha1
 kind: FederatedService
 metadata:
-  name: test-sh-glb
+  name: test-shglb
 spec:
   template:
     spec: 
       ports:
-      - port: 9080
+      - port: 80
         name: http
+        targetPort: 8080
       selector:
-        app: none
+        app: apache
       type: LoadBalancer  
 ---
 apiVersion: core.federation.k8s.io/v1alpha1
 kind: FederatedServicePlacement
 metadata:
-  name: test-sh-glb
+  name: test-shglb
 spec:
   clusterNames:
   - raffa1
-  - raffa2  
+  - raffa2
+---
+apiVersion: core.federation.k8s.io/v1alpha1
+kind: FederatedDeployment
+metadata:
+  name: apache
+spec:
+  template:  
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: apache
+      template:
+        metadata:
+          labels:
+            app: apache
+        spec:
+          containers:
+          - name: apache
+            image: registry.access.redhat.com/rhscl/httpd-24-rhel7
+            ports:
+            - containerPort: 8080
+---
+apiVersion: core.federation.k8s.io/v1alpha1
+kind: FederatedDeploymentPlacement
+metadata:
+  name: apache
+spec:
+  clusterNames:
+  - raffa1
+  - raffa2    

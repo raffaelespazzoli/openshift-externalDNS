@@ -61,21 +61,21 @@ You have to run the above command in each of your clusters.
 In the cluster with the federation controle plane create a federated service and corresponfing federated service record
 
 ```shell
-oc new-project shglb-test
-oc apply -f test/federated-service.yaml -n shglb-test
-oc apply -f test/dnsrecord.yaml -n shglb-test
+oc new-project test-shglb
+oc apply -f test/federated-service.yaml -n test-shglb
+oc apply -f test/dnsrecord.yaml -n test-shglb
 ```
 
 at this point a dnsendpoint object should be created, you can inspect it with:
 
 ```shell
-oc get dnsendpoint service-test-sh-glb -n shglb-test -o yaml
+oc get dnsendpoint service-test-shglb -n test-shglb -o yaml
 ```
 
 now you should be able to the following:
 
 ```shell
-dig shglb-test.<domain> <IP of one of the exposed coredns>
+dig test-shglb.<domain> <IP of one of the exposed coredns>
 ```
 
 and see a result.

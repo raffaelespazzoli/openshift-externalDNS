@@ -11,7 +11,7 @@ data:
       etcd {{ .Values.domain }} {
         stubzones
         path /skydns
-        endpoint http://coredns-etcd-client.{{ .Release.Namespace | quote }}.svc:2379
+        endpoint http://coredns-etcd-client.{{ .Release.Namespace }}.svc:2379
       }
       prometheus 0.0.0.0:9153
       proxy . /etc/resolv.conf

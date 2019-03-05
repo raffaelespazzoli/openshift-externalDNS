@@ -75,7 +75,7 @@ oc get dnsendpoint service-test-shglb -n test-shglb -o yaml
 now you should be able to the following:
 
 ```shell
-dig test-shglb.<domain> <IP of one of the exposed coredns>
+dig @<IP of one of the exposed coredns> test-shglb.<domain>
 ```
 
 and see a result.
